@@ -1,0 +1,30 @@
+.\" _printf() Manpage.
+.\" This function was created by Daniel Abayomi and Lebogang Mohlala for ALX SE program
+.TH man 8 "27 March 2023" "1.0" "_printf() man page"
+.SH NAME
+_printf() \- prints a string on the output stream.
+.SH SYNOPSIS
+int _printf(char *str, ...);
+.SH DESCRIPTION
+This function prints an string to the output stream. A specifier can be placed into the input string and the variable to the specifier can be placed as an argument to the function. The specifier is determined by the  [%] symbol and if the specifier is unknown it bypasses the unkown specifier and continues printing.
+.SH OPTIONS
+.TP
+.B %d
+Specifier to print an argument in decimal.
+.TP
+.B %i
+Specifier to print an integer argument.
+.TP
+.B %c
+Specifier to print a char argument.
+.TP
+.B %s
+Specifier to print a string argument
+.SH RETURN VALUE
+The function returns the number of characters printed excluding the null byte.
+.SH SEE ALSO
+NIL
+.SH BUGS
+No known bugs.
+.SH AUTHOR
+Abayomi Daniel and Lebogang Mohlala
