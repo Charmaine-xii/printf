@@ -7,4 +7,4 @@ void printnum(int n);
 int countnum(int n);
 int _printf(char *str, ...);
 
-#endif 
+#endif

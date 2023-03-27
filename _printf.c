@@ -3,6 +3,44 @@
 #include "main.h"
 
 /**
+ * handle_conversion - handles the specifier cases.
+ * @l: character to handle;
+ * @ptr: Argument list pointer;
+ *
+ * Return: count of characters printed.
+*/
+int handle_conversion(char l, va_list ptr)
+{
+	int ext_count = 0, tmp;
+
+	if (l == 'c')
+	{
+		_putchar((char)(va_arg(ptr, int)));
+		ext_count = 1;
+	}
+	else if (l == 's')
+	{
+		ext_count = printstr(va_arg(ptr, char *));
+	}
+	else if (l == '%')
+	{
+		_putchar(l);
+		ext_count = 1;
+	}
+	else if (l == 'd' || l == 'i')
+	{
+		tmp = va_arg(ptr, int);
+		ext_count = countnum(tmp);
+		printnum(tmp);
+	}
+	else
+	{
+		/* do nothing. */
+	}
+	return (ext_count);
+}
+
+/**
  * _printf - prints/formats a string
  * @str: String with/without specifier to print.
  *
@@ -10,7 +48,7 @@
 */
 int _printf(char *str, ...)
 {
-	int count = 0, ext_count, tmp;
+	int count = 0, ext_count;
 	char l;
 	va_list ptr;
 
@@ -20,41 +58,9 @@ int _printf(char *str, ...)
 		if (*str == '%')
 		{
 			str++;
-			switch (*str)
-			{
-			case 'c':
-				l = va_arg(ptr, int);
-				_putchar(l);
-				count++;
-				break;
-
-			case 's':
-				ext_count = printstr(va_arg(ptr, char *));
-				count += ext_count;
-				break;
-
-			case '%':
-				_putchar(*str);
-				count++;
-				break;
-
-			case 'd':
-				tmp = va_arg(ptr, int);
-				ext_count = countnum(tmp);
-				printnum(tmp);
-				count += ext_count;
-				break;
-
-			case 'i':
-				tmp = va_arg(ptr, int);
-				ext_count = countnum(tmp);
-				printnum(tmp);
-				count += ext_count;
-				break;
-
-			default:
-				break;
-			}
+			l = *str;
+			ext_count = handle_conversion(l, ptr);
+			count += ext_count;
 			str++;
 		}
 		else
