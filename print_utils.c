@@ -40,7 +40,8 @@ void printnum(int n)
 	if (n / 10)
 		printnum(n / 10);
 
-	_putchar((n % 10) + '0');
+	if (n != 0)
+		_putchar((n % 10) + '0');
 }
 
 /**
