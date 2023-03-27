@@ -12,7 +12,7 @@ int printstr(char *str)
 	int count = 0;
 
 	if (str == NULL)
-		str == "(null)";
+		str = "(null)";
 
 	while (*str && *str != '\0')
 	{
