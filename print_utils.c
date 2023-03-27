@@ -28,7 +28,8 @@ int printstr(char *str)
 */
 void printnum(int n)
 {
-	if (n < 0) {
+	if (n < 0)
+	{
 		_putchar('-');
 		n = -n;
 	}
@@ -54,7 +55,8 @@ int countnum(int n)
 
 	num = n;
 
-	if (num < 0) {
+	if (num < 0)
+	{
 		count++;
 		num = -num;
 	}
@@ -66,5 +68,6 @@ int countnum(int n)
 		if (num == 0)
 			break;
 	}
+	
 	return (count);
 }
