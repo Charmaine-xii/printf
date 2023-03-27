@@ -8,19 +8,22 @@
  *
  * Return: Number of characters printed.
 */
-int _printf(char *str, ...)
+int _printf(const char *format, ...)
 {
 	int count = 0, ext_count, tmp;
 	char l;
 	va_list ptr;
 
-	va_start(ptr, str);
-	while (*str && *str != '\0')
+    if (format == NULL)
+        return (-1);
+
+    va_start(ptr, format);
+	while (*format && *format != '\0')
 	{
-		if (*str == '%')
+		if (*format == '%')
 		{
-			str++;
-			switch (*str)
+			format++;
+			switch (*format)
 			{
 			case 'c':
 				l = va_arg(ptr, int);
@@ -34,7 +37,7 @@ int _printf(char *str, ...)
 				break;
 
 			case '%':
-				_putchar(*str);
+				_putchar(*format);
 				count++;
 				break;
 
@@ -55,12 +58,12 @@ int _printf(char *str, ...)
 			default:
 				break;
 			}
-			str++;
+			format++;
 		}
 		else
 		{
-			_putchar(*str);
-			str++;
+			_putchar(*format);
+			format++;
 			count++;
 		}
 	}
