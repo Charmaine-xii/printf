@@ -55,7 +55,7 @@ int _printf(char *str, ...)
 	va_start(ptr, str);
 	if (str != NULL)
 	{
-		count = 0;	
+		count = 0;
 		while (*str && *str != '\0')
 		{
 			if (*str == '%')
