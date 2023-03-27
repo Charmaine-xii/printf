@@ -14,6 +14,7 @@ int _printf(const char *format, ...)
 
 	int i = 0;
 
+<<<<<<< HEAD:_printf.c
 	if (format == NULL)
 		return (-1);
 
@@ -47,6 +48,40 @@ int _printf(const char *format, ...)
 			default:
 				putchar(format[i]);
 				break;
+=======
+/**
+ * _printf - prints/formats a string
+ * @str: String with/without specifier to print.
+ *
+ * Return: Number of characters printed.
+*/
+int _printf(char *str, ...)
+{
+	int count = -1, ext_count;
+	char l;
+	va_list ptr;
+
+	va_start(ptr, str);
+	if (str != NULL)
+	{
+		count = 0;
+		while (*str && *str != '\0')
+		{
+			if (*str == '%')
+			{
+				str++;
+				l = *str;
+				ext_count = handle_conversion(l, ptr);
+				count += ext_count;
+				str++;
+			}
+			else
+			{
+				_putchar(*str);
+				str++;
+				count++;
+			}
+>>>>>>> 4a2e6084f79c36cf2c8c7bfe277aecaac0066009:test/_printf.c
 		}
 		}	
 	else
