@@ -68,6 +68,6 @@ int countnum(int n)
 		if (num == 0)
 			break;
 	}
-	
+
 	return (count);
 }
