@@ -48,26 +48,30 @@ int handle_conversion(char l, va_list ptr)
 */
 int _printf(char *str, ...)
 {
-	int count = 0, ext_count;
+	int count = -1, ext_count;
 	char l;
 	va_list ptr;
 
 	va_start(ptr, str);
-	while (*str && *str != '\0')
+	if (str != NULL)
 	{
-		if (*str == '%')
+		count = 0;	
+		while (*str && *str != '\0')
 		{
-			str++;
-			l = *str;
-			ext_count = handle_conversion(l, ptr);
-			count += ext_count;
-			str++;
-		}
-		else
-		{
-			_putchar(*str);
-			str++;
-			count++;
+			if (*str == '%')
+			{
+				str++;
+				l = *str;
+				ext_count = handle_conversion(l, ptr);
+				count += ext_count;
+				str++;
+			}
+			else
+			{
+				_putchar(*str);
+				str++;
+				count++;
+			}
 		}
 	}
 	va_end(ptr);
