@@ -1,24 +1,33 @@
-#ifndef MAIN_H_
-#define MAIN_H_
-
+#ifndef _MAIN_H
+#define _MAIN_H
 #include <stdarg.h>
-#include <unistd.h>
-#include <stdio.h>
 
-int main(void);
 int _putchar(char c);
-<<<<<<< HEAD
-int _puts(char *s);
-=======
-int printstr(char *str);
-int printnum(int n);
-int countnum(int n);
-int print_c(va_list ptr);
-int print_s(va_list ptr);
-int print_p(__attribute__ ((unused)) va_list ptr);
-int print_i(va_list ptr);
->>>>>>> 73aee29b7dc99b768bd381c0d1a90aeb7436822a
+int print_int(va_list arg);
+int print_unsigned(va_list arg);
 int _printf(const char *format, ...);
-int handle_format_string(const char *format, va_list arg);
+int print_char(va_list arg);
+int print_str(va_list arg);
+int print_percent(void);
+void print_binary(unsigned int n, unsigned int* printed);
+int print_unsignedToBinary(va_list arg);
+int print_oct(va_list arg);
+int print_unsignedIntToHex(unsigned int num, char _case);
+int print_hex_base(va_list arg, char _case);
+int print_hex(va_list arg);
+int print_HEX(va_list arg);
+int print_STR (va_list arg);
+
+/**
+ * struct identifierStruct - structure definition of a printTypeStruct
+ * @indentifier: type.
+ * @printer: function to print
+ */
+
+typedef struct identifierStruct
+{
+char *indentifier;
+int (*printer)(va_list);
+} identifierStruct;
 
 #endif
