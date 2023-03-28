@@ -1,70 +1,77 @@
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
 #include "main.h"
+#include <stdarg.h>
+#include <stddef.h>
 
 /**
-* _printf - printf function
-* @format: format
-*
-* Return: number of characters printed
-*/
+ * get_op - select function for conversion char
+ * @c: char to check
+ * Return: pointer to function
+ */
+
+int (*get_op(const char c))(va_list)
+{
+	int i = 0;
+
+	flags_p fp[] = {
+		{"c", print_char},
+		{"s", print_str},
+		{"i", print_nbr},
+		{"d", print_nbr},
+		{"%", print_percent}
+	};
+	while (i < 14)
+	{
+		if (c == fp[i].c[0])
+		{
+			return (fp[i].f);
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+/**
+ * _printf - Reproduce behavior of printf function
+ * @format: format string
+ * Return: value of printed chars
+ */
+
 int _printf(const char *format, ...)
 {
-	va_list args;
+	va_list ap;
+	int sum = 0, i = 0;
+	int (*func)();
 
-	int i = 0, x = 0;
-	char buff[100];
-	char *str_arg;
-
-	if (format == NULL)
+	if (!format || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
+	va_start(ap, format);
 
-	va_start(args, format);
-
-	for (i = 0; format && format[i] != '\0'; i++)
-
-		while (format[i])
-		{	
-			if (format[i] == '%')
-			{	
-				i++;
-
-			switch (format[i])
+	while (format[i])
+	{
+		if (format[i] == '%')
+		{
+			if (format[i + 1] != '\0')
+				func = get_op(format[i + 1]);
+			if (func == NULL)
 			{
-				case 'c':
-				{
-					buff[x] = va_arg(args, int);
-					x++;
-						break;
-				}
-				case's':
-				{
-					str_arg = va_arg(args, char*);
-					strcpy(&buff[x], str_arg);
-					x += strlen(str_arg);
-						break;
-				}
-				case '%':
-				putchar('%');
-					break;
-				default:
-					putchar(format[i]);
-					break;
+				_putchar(format[i]);
+				sum++;
+				i++;
 			}
-		} else	{
-			
-				buff[x] = (format[i]);
-					i++;
+			else
+			{
+				sum += func(ap);
+				i += 2;
+				continue;
 			}
 		}
-
-			fwrite(buff, x, 1, stdout);
-			va_end(args);
-			return (x);
-	
-	
-	printf("%c %s %%\n");
-
-	return (0);
+		else
+		{
+			_putchar(format[i]);
+			sum++;
+			i++;
+		}
+	}
+	va_end(ap);
+	return (sum);
 }
