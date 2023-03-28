@@ -1,2 +1,5 @@
 # Ignore main.c files
 main.c
+
+# Ignore output files
+a.out
