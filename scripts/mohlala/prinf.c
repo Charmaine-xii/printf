@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include "main.h"
 
+void printf(char *,...);
+c
 /**
 * _printf - printf function
 * @format: format

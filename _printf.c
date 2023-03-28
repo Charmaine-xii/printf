@@ -1,70 +1,70 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include <string.h>
 #include "main.h"
 
 /**
-* _printf - printf function
-* @format: format
-*
-* Return: number of characters printed
+ * _printf - prints/formats a string
+ * @str: String with/without specifier to print.
+ *
+ * Return: Number of characters printed.
 */
 int _printf(const char *format, ...)
 {
-	va_list args;
+	int count = 0, ext_count, tmp;
+	char l;
+	va_list ptr;
 
-	int i = 0, x = 0;
-	char buff[100];
-	char *str_arg;
-
-	if (format == NULL)
-		return (-1);
-
-	va_start(args, format);
-
-	for (i = 0; format && format[i] != '\0'; i++)
-
-		while (format[i])
-		{	
-			if (format[i] == '%')
-			{	
-				i++;
-
-			switch (format[i])
+	va_start(ptr, format);
+	while (*format && *format != '\0')
+	{
+		if (*format == '%')
+		{
+			format++;
+			switch (*format)
 			{
-				case 'c':
-				{
-					buff[x] = va_arg(args, int);
-					x++;
-						break;
-				}
-				case's':
-				{
-					str_arg = va_arg(args, char*);
-					strcpy(&buff[x], str_arg);
-					x += strlen(str_arg);
-						break;
-				}
-				case '%':
-				putchar('%');
-					break;
-				default:
-					putchar(format[i]);
-					break;
+			case 'c':
+				l = va_arg(ptr, int);
+				_putchar(l);
+				count++;
+				break;
+
+			case 's':
+				ext_count = printstr(va_arg(ptr, char *));
+				count += ext_count;
+				break;
+
+			case '%':
+				_putchar(*format);
+				count++;
+				break;
+
+			case 'd':
+				tmp = va_arg(ptr, int);
+				ext_count = countnum(tmp);
+				printnum(tmp);
+				count += ext_count;
+				break;
+
+			case 'i':
+				tmp = va_arg(ptr, int);
+				ext_count = countnum(tmp);
+				printnum(tmp);
+				count += ext_count;
+				break;
+
+			default:
+				break;
 			}
-		} else	{
-			
-				buff[x] = (format[i]);
-					i++;
-			}
+			format++;
 		}
-
-			fwrite(buff, x, 1, stdout);
-			va_end(args);
-			return (x);
-	
-	
-	printf("%c %s %%\n");
-
-	return (0);
+		else
+		{
+			_putchar(*format);
+			format++;
+			count++;
+		}
+	}
+	va_end(ptr);
+	_putchar('\0');
+	return (count);
 }
