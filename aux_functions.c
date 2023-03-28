@@ -35,5 +35,5 @@ int print_s(va_list ptr)
  */
 int print_p(va_list ptr)
 {
-	return print_c(ptr);
+	return (print_c(ptr));
 }
