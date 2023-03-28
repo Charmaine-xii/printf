@@ -32,9 +32,9 @@ int print_s(va_list ptr)
  *
  * Return: count of characters printed
  */
-int print_p(va_list ptr)
+int print_p(__attribute__ ((unused)) va_list ptr)
 {
-	return (print_c(ptr));
+	return (_putchar('%'));
 }
 
 /**

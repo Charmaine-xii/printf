@@ -20,7 +20,7 @@ int (*get_func(const char l))(va_list)
 		{"%", print_p},
 	};
 
-	for (; i < 3; i++)
+	for (; i < 5; i++)
 	{
 		if (ops[i].c[0] == l)
 			return (ops[i].f);
