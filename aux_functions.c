@@ -45,5 +45,5 @@ int print_p(va_list ptr)
  */
 int print_i(va_list ptr)
 {
-	return(printnum(va_arg(ptr, int)));
+	return (printnum(va_arg(ptr, int)));
 }
