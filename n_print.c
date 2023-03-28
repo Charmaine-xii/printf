@@ -37,8 +37,9 @@ int (*get_func(const char l))(va_list)
 int _printf(const char *format, ...)
 {
 	int count = 0;
-	int (*func)();
+	/* char l; */
 	va_list ptr;
+	int (*func)();
 
 	if (format == NULL)
 		return (-1);
@@ -48,12 +49,14 @@ int _printf(const char *format, ...)
 	{
 		if (*format == '%')
 		{
-			/* format++; */
-			func = get_func(*format++);
+			format++;
+			/* l = *format;
+			_putchar(l); */
+			func = get_func(*format);
 			if (func != NULL)
 			{
 				count += func(ptr);
-				format += 2;
+				format ++;
 			}
 			else
 			{
