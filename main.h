@@ -3,11 +3,12 @@
 
 int _putchar(char c);
 int printstr(char *str);
-void printnum(int n);
+int printnum(int n);
 int countnum(int n);
 int print_c(va_list ptr);
 int print_s(va_list ptr);
 int print_p(va_list ptr);
+int print_i(va_list ptr);
 int _printf(const char *format, ...);
 
 /**
@@ -17,7 +18,7 @@ int _printf(const char *format, ...);
  */
 typedef struct f_ops
 {
-	char c;
+	char *c;
 	int (*f)(va_list);
 } f_ops;
 

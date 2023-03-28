@@ -8,7 +8,6 @@
  *
  * Return: count of characters printed
  */
-
 int print_c(va_list ptr)
 {
 	return (_putchar(va_arg(ptr, int)));
@@ -36,4 +35,15 @@ int print_s(va_list ptr)
 int print_p(va_list ptr)
 {
 	return (print_c(ptr));
+}
+
+/**
+ * print_i - handles the %i format
+ * @ptr: The argument pointer.
+ *
+ * Return: count of characters printed
+ */
+int print_i(va_list ptr)
+{
+	return(printnum(va_arg(ptr, int)));
 }

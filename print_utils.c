@@ -23,22 +23,26 @@ int printstr(char *str)
  *
  * Return: void.
 */
-void printnum(int n)
+int printnum(int n)
 {
+	int i = 0;
+
 	if (n < 0)
 	{
-		_putchar('-');
+		i += _putchar('-');
 		n = -n;
 	}
 
 	if (n == 0)
-		_putchar('0');
+		i += _putchar('0');
 
 	if (n / 10)
-		printnum(n / 10);
+		i += printnum(n / 10);
 
 	if (n != 0)
-		_putchar((n % 10) + '0');
+		i += _putchar((n % 10) + '0');
+
+	return (i);
 }
 
 /**

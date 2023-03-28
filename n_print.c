@@ -13,14 +13,16 @@ int (*get_func(const char l))(va_list)
 	int i = 0;
 
 	f_ops ops[] = {
-		{'c', print_c},
-		{'s', print_s},
-		{'%', print_p},
+		{"d", print_i},
+		{"c", print_c},
+		{"s", print_s},
+		{"i", print_i},
+		{"%", print_p},
 	};
 
 	for (; i < 3; i++)
 	{
-		if (ops[i].c == l)
+		if (ops[i].c[0] == l)
 			return (ops[i].f);
 	}
 
