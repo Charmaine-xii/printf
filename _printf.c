@@ -1,77 +1,70 @@
-#include "main.h"
+#include <stdio.h>
 #include <stdarg.h>
-#include <stddef.h>
+#include <string.h>
+#include "main.h"
 
 /**
- * get_op - select function for conversion char
- * @c: char to check
- * Return: pointer to function
- */
-
-int (*get_op(const char c))(va_list)
-{
-	int i = 0;
-
-	flags_p fp[] = {
-		{"c", print_char},
-		{"s", print_str},
-		{"i", print_nbr},
-		{"d", print_nbr},
-		{"%", print_percent}
-	};
-	while (i < 14)
-	{
-		if (c == fp[i].c[0])
-		{
-			return (fp[i].f);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-/**
- * _printf - Reproduce behavior of printf function
- * @format: format string
- * Return: value of printed chars
- */
-
+* _printf - printf function
+* @format: format
+*
+* Return: number of characters printed
+*/
 int _printf(const char *format, ...)
 {
-	va_list ap;
-	int sum = 0, i = 0;
-	int (*func)();
+	va_list args;
 
-	if (!format || (format[0] == '%' && format[1] == '\0'))
+	int i = 0, x = 0;
+	char buff[100];
+	char *str_arg;
+
+	if (format == NULL)
 		return (-1);
-	va_start(ap, format);
 
-	while (format[i])
-	{
-		if (format[i] == '%')
-		{
-			if (format[i + 1] != '\0')
-				func = get_op(format[i + 1]);
-			if (func == NULL)
-			{
-				_putchar(format[i]);
-				sum++;
+	va_start(args, format);
+
+	for (i = 0; format && format[i] != '\0'; i++)
+
+		while (format[i])
+		{	
+			if (format[i] == '%')
+			{	
 				i++;
-			}
-			else
+
+			switch (format[i])
 			{
-				sum += func(ap);
-				i += 2;
-				continue;
+				case 'c':
+				{
+					buff[x] = va_arg(args, int);
+					x++;
+						break;
+				}
+				case's':
+				{
+					str_arg = va_arg(args, char*);
+					strcpy(&buff[x], str_arg);
+					x += strlen(str_arg);
+						break;
+				}
+				case '%':
+				putchar('%');
+					break;
+				default:
+					putchar(format[i]);
+					break;
+			}
+		} else	{
+			
+				buff[x] = (format[i]);
+					i++;
 			}
 		}
-		else
-		{
-			_putchar(format[i]);
-			sum++;
-			i++;
-		}
-	}
-	va_end(ap);
-	return (sum);
+
+			fwrite(buff, x, 1, stdout);
+			va_end(args);
+			return (x);
+	
+	
+	printf("%c %s %%\n");
+
+	return (0);
 }
