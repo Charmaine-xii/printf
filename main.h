@@ -7,7 +7,7 @@ int printnum(int n);
 int countnum(int n);
 int print_c(va_list ptr);
 int print_s(va_list ptr);
-int print_p(va_list ptr);
+int print_p(__attribute__ ((unused)) va_list ptr);
 int print_i(va_list ptr);
 int _printf(const char *format, ...);
 
