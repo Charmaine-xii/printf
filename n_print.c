@@ -3,68 +3,68 @@
 #include "main.h"
 
 /**
+ * *get_func - gets the appropriate function based on the char input
+ * @l: Input character
+ *
+ * Return: Pointer to appropriate function
+ */
+int (*get_func(const char l))(va_list)
+{
+	int i = 0;
+
+	f_ops ops[] = {
+		{'c', print_c},
+		{'s', print_s},
+		{'%', print_p},
+	};
+
+	for (; i < 3; i++)
+	{
+		if (ops[i].c == l)
+			return (ops[i].f);
+	}
+
+	/** if all else fails... */
+	return (NULL);
+}
+
+/**
  * _printf - prints/formats a string
- * @str: String with/without specifier to print.
+ * @format: String with/without specifier to print.
  *
  * Return: Number of characters printed.
 */
 int _printf(const char *format, ...)
 {
-	int count = 0, ext_count, tmp;
-	char l;
+	int count = 0;
+	int (*func)();
 	va_list ptr;
 
-    if (format == NULL)
-        return (-1);
+	if (format == NULL)
+		return (-1);
 
-    va_start(ptr, format);
+	va_start(ptr, format);
 	while (*format && *format != '\0')
 	{
 		if (*format == '%')
 		{
-			format++;
-			switch (*format)
+			/* format++; */
+			func = get_func(*format++);
+			if (func != NULL)
 			{
-			case 'c':
-				l = va_arg(ptr, int);
-				_putchar(l);
-				count++;
-				break;
-
-			case 's':
-				ext_count = printstr(va_arg(ptr, char *));
-				count += ext_count;
-				break;
-
-			case '%':
-				_putchar(*format);
-				count++;
-				break;
-
-			case 'd':
-				tmp = va_arg(ptr, int);
-				ext_count = countnum(tmp);
-				printnum(tmp);
-				count += ext_count;
-				break;
-
-			case 'i':
-				tmp = va_arg(ptr, int);
-				ext_count = countnum(tmp);
-				printnum(tmp);
-				count += ext_count;
-				break;
-
-			default:
-				break;
+				count += func(ptr);
+				format += 2;
 			}
-			format++;
+			else
+			{
+				count += _putchar(*format);
+				format++;
+			}
 		}
 		else
 		{
-			_putchar(*format);
+			count += _putchar(*format);
 			format++;
-			count++;
 		}
 	}
 	va_end(ptr);

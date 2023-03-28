@@ -11,14 +11,8 @@ int printstr(char *str)
 {
 	int count = 0;
 
-	if (str == NULL)
-		str = "(null)";
-
 	while (*str && *str != '\0')
-	{
-		_putchar(*str++);
-		count++;
-	}
+		count += _putchar(*str++);
 
 	return (count);
 }
