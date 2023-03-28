@@ -1,61 +1,70 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include <string.h>
 #include "main.h"
 
 /**
- * _printf - prints/formats a string
- * @str: String with/without specifier to print.
- *
- * Return: Number of characters printed.
+* _printf - printf function
+* @format: format
+*
+* Return: number of characters printed
 */
 int _printf(const char *format, ...)
 {
-	int count = 0, i = 0;
-	va_list ptr;
+	va_list args;
 
-	va_start(ptr, format);
+	int i = 0, x = 0;
+	char buff[100];
+	char *str_arg;
+
 	if (format == NULL)
 		return (-1);
-	while (format[i] && format[i] != '\0')
-	{
-		if (format[i] == '%')
-		{
-			switch (format[i + 1])
+
+	va_start(args, format);
+
+	for (i = 0; format && format[i] != '\0'; i++)
+
+		while (format[i])
+		{	
+			if (format[i] == '%')
+			{	
+				i++;
+
+			switch (format[i])
 			{
-			case 'c':
-				count += _putchar(va_arg(ptr, int));
-				break;
-
-			case 's':
-				count += printstr(va_arg(ptr, char *));
-				break;
-
-			case '%':
-				count += _putchar(format[i + 1]);
-				break;
-
-			case 'd':
-				count += printnum(va_arg(ptr, int));
-				break;
-
-			case 'i':
-				count += printnum(va_arg(ptr, int));
-				break;
-
-			default:
-				count += _putchar(format[i]);
-				count += _putchar(format[i + 1]);
-				break;
+				case 'c':
+				{
+					buff[x] = va_arg(args, int);
+					x++;
+						break;
+				}
+				case's':
+				{
+					str_arg = va_arg(args, char*);
+					strcpy(&buff[x], str_arg);
+					x += strlen(str_arg);
+						break;
+				}
+				case '%':
+				putchar('%');
+					break;
+				default:
+					putchar(format[i]);
+					break;
 			}
-			i += 2;
+		} else	{
+			
+				buff[x] = (format[i]);
+					i++;
+			}
 		}
-		else
-		{
-			count += _putchar(format[i]);
-			i++;
-		}
-	}
-	va_end(ptr);
-	_putchar('\0');
-	return (count);
+
+			fwrite(buff, x, 1, stdout);
+			va_end(args);
+			return (x);
+	
+	
+	printf("%c %s %%\n");
+
+	return (0);
 }
