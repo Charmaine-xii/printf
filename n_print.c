@@ -36,8 +36,7 @@ int (*get_func(const char l))(va_list)
 */
 int _printf(const char *format, ...)
 {
-	int count = 0;
-	/* char l; */
+	int count = 0, i = 0;
 	va_list ptr;
 	int (*func)();
 
@@ -45,29 +44,26 @@ int _printf(const char *format, ...)
 		return (-1);
 
 	va_start(ptr, format);
-	while (*format && *format != '\0')
+	while (format[i] && format[i] != '\0')
 	{
-		if (*format == '%')
+		if (format[i] == '%')
 		{
-			format++;
-			/* l = *format;
-			_putchar(l); */
-			func = get_func(*format);
+			func = get_func(format[i + 1]);
 			if (func != NULL)
 			{
 				count += func(ptr);
-				format ++;
+				i += 2;
 			}
 			else
 			{
 				count += _putchar(*format);
-				format++;
+				i++;
 			}
 		}
 		else
 		{
-			count += _putchar(*format);
-			format++;
+			count += _putchar(format[i]);
+			i++;
 		}
 	}
 	va_end(ptr);
