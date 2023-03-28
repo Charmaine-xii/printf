@@ -10,58 +10,49 @@
 */
 int _printf(const char *format, ...)
 {
-	int count = 0, ext_count, tmp;
-	char l;
+	int count = 0, i = 0;
 	va_list ptr;
 
 	va_start(ptr, format);
-	while (*format && *format != '\0')
+	if (format == NULL)
+		return (-1);
+	while (format[i] && format[i] != '\0')
 	{
-		if (*format == '%')
+		if (format[i] == '%')
 		{
-			format++;
-			switch (*format)
+			switch (format[i + 1])
 			{
 			case 'c':
-				l = va_arg(ptr, int);
-				_putchar(l);
-				count++;
+				count += _putchar(va_arg(ptr, int));
 				break;
 
 			case 's':
-				ext_count = printstr(va_arg(ptr, char *));
-				count += ext_count;
+				count += printstr(va_arg(ptr, char *));
 				break;
 
 			case '%':
-				_putchar(*format);
-				count++;
+				count += _putchar(format[i + 1]);
 				break;
 
 			case 'd':
-				tmp = va_arg(ptr, int);
-				ext_count = countnum(tmp);
-				printnum(tmp);
-				count += ext_count;
+				count += printnum(va_arg(ptr, int));
 				break;
 
 			case 'i':
-				tmp = va_arg(ptr, int);
-				ext_count = countnum(tmp);
-				printnum(tmp);
-				count += ext_count;
+				count += printnum(va_arg(ptr, int));
 				break;
 
 			default:
+				count += _putchar(format[i]);
+				count += _putchar(format[i + 1]);
 				break;
 			}
-			format++;
+			i += 2;
 		}
 		else
 		{
-			_putchar(*format);
-			format++;
-			count++;
+			count += _putchar(format[i]);
+			i++;
 		}
 	}
 	va_end(ptr);
