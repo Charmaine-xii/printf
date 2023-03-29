@@ -66,11 +66,11 @@ int _strlen_recursion(char *s)
 }
 
 /**
- *  _strdup - a pointer to a newly allocated space in memory,
- *  	 which contains a copy of the string given as a parameter.
- *  @str: char pointer to copy
+ * _strdup - a pointer to a newly allocated space in memory,
+ * which contains a copy of the string given as a parameter.
+ * @str: char pointer to copy
  *
- *  Return: a new char pointer
+ * Return: a new char pointer
  */
 char *_strdup(char *str)
 {

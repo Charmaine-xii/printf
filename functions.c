@@ -4,23 +4,10 @@
 #include <unistd.h>
 
 /**
- * print_nbr - print number
- * @ap: arg list
- * Return: number of printed char
- */
-
-int print_nbr(va_list ap)
-{
-	return (print_number(va_arg(ap, int)));
-}
-
-
-/**
  * print_char - print single char
  * @ap: arg list
  * Return: number of printed char
  */
-
 int print_char(va_list ap)
 {
 	char c = va_arg(ap, int);
@@ -38,7 +25,6 @@ int print_char(va_list ap)
  * @ap: arg list
  * Return: number of printed char
  */
-
 int print_str(va_list ap)
 {
 	char *argument = va_arg(ap, char *);
@@ -54,11 +40,10 @@ int print_str(va_list ap)
 }
 
 /**
- * print_str_unprintable - unprint some characters
+ * print_str_unprintable - unprint characters
  * @ap: arg list
  * Return: number of printed char
  */
-
 int print_str_unprintable(va_list ap)
 {
 	char *argument = va_arg(ap, char *);
@@ -74,9 +59,9 @@ int print_str_unprintable(va_list ap)
 }
 
 /**
- * print_str_reverse - reverse a string
+ * print_str_reverse - reverses a string
  *  @ap: arg list
- *  Return: number printed char
+ *  Return: number of printed char
  */
 int print_str_reverse(va_list ap)
 {
@@ -119,15 +104,3 @@ int print_str_reverse(va_list ap)
 
 	return (sum);
 }
-
-/**
- * print_percent -  print percent character
- * @args: char
- * Return: percent character
- */
-
-int print_percent(va_list args __attribute__((unused)))
-{
-	return (_putchar('%'));
-}
-
