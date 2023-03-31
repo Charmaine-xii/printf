@@ -1,77 +1,96 @@
+##include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "main.h"
-#include <stdarg.h>
-#include <stddef.h>
+
+void printf(char*, ...);
 
 /**
- * get_op - select function for conversion char
- * @c: char to check
- * Return: pointer to function
- */
-
-int (*get_op(const char c))(va_list)
+* _printf - print function
+* @format: format
+*
+* Return: number of characters printed
+*/
+int _printf(const char *format, ...)
 {
-	int i = 0;
+	va_list args;
+	int count = 0;
 
-	flags_p fp[] = {
-		{"c", print_char},
-		{"s", print_str},
-		{"i", print_nbr},
-		{"d", print_nbr},
-		{"%", print_percent}
-	};
-	while (i < 14)
+	va_start(args, format);
+
+	while (*format)
 	{
-		if (c == fp[i].c[0])
+		if (*format == '%')
 		{
-			return (fp[i].f);
+			format++;
+
+			switch (*format)
+			{
+				case 'c':
+				{
+					char c = va_arg(args, int);
+
+					putchar(c);
+					count++;
+					break;
+				}
+
+				case 's':
+				{
+					char *s = va_arg(args, char*);
+
+					fputs(s, stdout);
+					count += strlen(s);
+					break;
+				}
+
+				case '%':
+				{
+					putchar('%');
+					count++;
+					break;
+				}
+
+				default:
+
+				{
+					putchar('%');
+					putchar(*format);
+					count += 2;
+					break;
+				}
+			}
 		}
-		i++;
+
+		else
+
+		{
+			putchar(*format);
+			count++;
+		}
+
+		format++;
 	}
-	return (NULL);
+
+	va_end(args);
+
+	return (count);
 }
 
 /**
- * _printf - Reproduce behavior of printf function
- * @format: format string
- * Return: value of printed chars
- */
-
-int _printf(const char *format, ...)
+* main - entry point
+*
+* Return: 0 (successful)
+*/
+int main(void)
 {
-	va_list ap;
-	int sum = 0, i = 0;
-	int (*func)();
+	char c = 'A';
+	char *s = "hello";
 
-	if (!format || (format[0] == '%' && format[1] == '\0'))
-		return (-1);
-	va_start(ap, format);
+	int count = _printf("%c %s %%\n", c, s);
 
-	while (format[i])
-	{
-		if (format[i] == '%')
-		{
-			if (format[i + 1] != '\0')
-				func = get_op(format[i + 1]);
-			if (func == NULL)
-			{
-				_putchar(format[i]);
-				sum++;
-				i++;
-			}
-			else
-			{
-				sum += func(ap);
-				i += 2;
-				continue;
-			}
-		}
-		else
-		{
-			_putchar(format[i]);
-			sum++;
-			i++;
-		}
-	}
-	va_end(ap);
-	return (sum);
+	printf("count:%d\n", count);
+
+	return (0);
+
 }
